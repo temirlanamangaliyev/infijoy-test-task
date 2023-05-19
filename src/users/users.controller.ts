@@ -14,13 +14,17 @@ import { SerializeInterceptors } from '../interceptors/serialize.interceptors';
 import { CreateUserDto } from './create-user.dto';
 import { UpdateUserDto } from './update-user.dto';
 import { UsersService } from './users.service';
+import { AuthService } from './auth.service';
 
 @Controller('auth')
 export class UsersController {
-  constructor(private userService: UsersService) {}
+  constructor(
+    private userService: UsersService,
+    private authService: AuthService,
+  ) {}
   @Post('/signup')
   createUser(@Body() body: CreateUserDto) {
-    this.userService.create(body);
+    return this.authService.signup(body);
   }
 
   @UseInterceptors(SerializeInterceptors) // using interceptor in order to show only fields that is required from doc
