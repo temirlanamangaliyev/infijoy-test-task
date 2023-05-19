@@ -1,4 +1,5 @@
-import { IsEmail, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsDate, IsEmail, IsString } from 'class-validator';
 
 export class CreateUserDto {
   @IsEmail()
@@ -6,4 +7,17 @@ export class CreateUserDto {
 
   @IsString()
   password: string;
+
+  @IsString()
+  name: string;
+
+  @IsDate()
+  @Type(() => Date)
+  dob: Date;
+
+  @IsString()
+  address: string;
+
+  @IsString()
+  description: string;
 }
