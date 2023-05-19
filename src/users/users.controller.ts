@@ -8,7 +8,9 @@ import {
   Param,
   Query,
   NotFoundException,
+  UseInterceptors,
 } from '@nestjs/common';
+import { SerializeInterceptors } from '../interceptors/serialize.interceptors';
 import { CreateUserDto } from './create-user.dto';
 import { UpdateUserDto } from './update-user.dto';
 import { UsersService } from './users.service';
@@ -21,15 +23,18 @@ export class UsersController {
     this.userService.create(body);
   }
 
+  @UseInterceptors(SerializeInterceptors) // using interceptor in order to show only fields that is required from doc
   @Get('/:id')
-  findUser(@Param('id') id: string) {
-    const user = this.userService.findOne(parseInt(id));
+  async findUser(@Param('id') id: string) {
+    const user = await this.userService.findOne(parseInt(id));
+
     if (!user) {
       throw new NotFoundException('user not found');
     }
     return user;
   }
 
+  @UseInterceptors(SerializeInterceptors)
   @Get()
   findAllUsers(@Query('email') email: string) {
     return this.userService.find(email);
