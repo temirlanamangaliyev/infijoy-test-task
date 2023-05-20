@@ -3,30 +3,28 @@ import {
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
+  DeleteDateColumn,
   AfterInsert,
   AfterRemove,
   AfterUpdate,
 } from 'typeorm';
 
 @Entity()
-export class Users {
+export class Relationships {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  name: string;
+  follower_id: number;
 
   @Column()
-  dob: Date;
-
-  @Column()
-  address: string;
-
-  @Column()
-  description: string;
+  following_id: number;
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @DeleteDateColumn()
+  deletedAt: Date;
 
   @AfterInsert()
   logInsert() {
