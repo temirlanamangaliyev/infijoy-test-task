@@ -47,6 +47,7 @@ In order to check the documentation you need to run API, and go by http://localh
 
 ## Database schema
 
+```mermaid
 erDiagram
 Users ||--o{ Friends : has
 Users ||--o{ Relationships : has
@@ -73,6 +74,7 @@ following_id INTEGER
 createdAt DATE
 deletedAt DATE
 }
+```
 
 The Users entity has the following attributes: id, name, dob, address, description, and createdAt.
 
