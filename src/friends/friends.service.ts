@@ -1,16 +1,19 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Friends } from './friends.entity';
 
 @Injectable()
 export class FriendsService {
+  private readonly logger = new Logger(FriendsService.name);
+
   constructor(
     @InjectRepository(Friends)
     private friendsRepository: Repository<Friends>,
   ) {}
 
-  createFriendship(userId: number, friendId: number) {
+  createFriendship(userId: number, friendId: number): Promise<Friends> {
+    this.logger.log(`Create friendship with userId: ${userId}`);
     const friendship = this.friendsRepository.create({
       user_id: userId,
       friend_id: friendId,
@@ -19,7 +22,7 @@ export class FriendsService {
     return this.friendsRepository.save(friendship);
   }
 
-  getUserFriends(userId: number) {
+  getUserFriends(userId: number): Promise<Friends[]> {
     const friends = this.friendsRepository.find({ where: { user_id: userId } });
 
     return friends;
@@ -37,10 +40,12 @@ export class FriendsService {
     return friendship;
   }
 
-  async deleteFriendship(userId: number, friendId: number) {
+  async deleteFriendship(userId: number, friendId: number): Promise<void> {
+    this.logger.log(`Deleting friendship with userId: ${userId}`);
+
     const friendship = await this.getUsersFriendship(userId, friendId);
 
-    return this.friendsRepository.save({
+    this.friendsRepository.save({
       ...friendship,
       deletedAt: new Date(),
     });
