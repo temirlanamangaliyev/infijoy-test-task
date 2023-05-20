@@ -6,7 +6,7 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { Users } from './users/user.entity';
 import { Relationships } from './relationships/relationships.entity';
-import { AuthorizationModule } from './authorization/authorization.module';
+import { AuthModule } from './authorization/authorization.module';
 import { RelationshipsModule } from './relationships/relationships.module';
 import { FriendsModule } from './friends/friends.module';
 import { Friends } from './friends/friends.entity';
@@ -21,7 +21,7 @@ import { LoggerMiddleware } from './middleware/logger.middleware';
       synchronize: true,
     }),
     UsersModule,
-    AuthorizationModule,
+    AuthModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
