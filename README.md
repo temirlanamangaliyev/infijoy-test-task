@@ -29,7 +29,7 @@ $ npm run start:dev
 $ npm run start:prod
 ````
 
-## Test
+## Testing
 
 ```bash
 # unit tests
@@ -41,9 +41,13 @@ $ npm run test:cov
 
 ## API Documentation
 
-In order to check the documentation you need to run API, and go by http://localhost:3000/api, it will open Swagger on local
+To access the API documentation, run the API and visit http://localhost:3000/api. This will open Swagger on your local machine.
 
 ## Folder structure
+
+    src: Contains the source code of the application.
+
+    test: Contains the unit tests for the application.
 
 ## Database schema
 
@@ -88,3 +92,11 @@ Users has a one-to-many relationship with Friends and Relationships.
 Friends and Relationships have a many-to-one relationship.
 
 ## Env variables
+
+Environment Variables
+The application requires the following environment variables to be set in .file, auth is implemented with guards:
+
+AUTH0_AUDIENCE
+AUTH0_DOMAIN
+
+Make sure to set these variables before running the application. For more comfortable testing guards is commented, if u want to check it set your own keys and API token
