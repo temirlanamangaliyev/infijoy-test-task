@@ -81,11 +81,16 @@ export class RelationshipsService {
       throw new NotFoundException('Relationship not found.');
     }
 
-    relationship.deletedAt = new Date();
     if (await this.hasUsersFriendship(followerId, followingId)) {
-      // console.log('asdsssw');
+      await Promise.all([
+        this.friendsService.deleteFriendship(followerId, followingId),
+        this.friendsService.deleteFriendship(followingId, followerId),
+      ]);
     }
-    return this.relationshipsRepository.save(relationship);
+    return this.relationshipsRepository.save({
+      ...relationship,
+      deletedAt: new Date(),
+    });
   }
 
   async hasUsersFriendship(
@@ -101,7 +106,7 @@ export class RelationshipsService {
       followerId,
     );
 
-    if (!followerFriendship && !followingFriendship) return false;
+    if (!followerFriendship || !followingFriendship) return false;
 
     return true;
   }

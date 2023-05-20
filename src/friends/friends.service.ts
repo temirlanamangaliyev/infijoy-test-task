@@ -35,14 +35,21 @@ export class FriendsService {
       where: {
         user_id: userId,
         friend_id: friendId,
-        deletedAt: null, // Exclude already deleted relationships
+        deletedAt: null, // Exclude already deleted friendship
       },
     });
 
     return friendship;
   }
 
-  deleteFriendship() {}
+  async deleteFriendship(userId: number, friendId: number) {
+    const friendship = await this.getUsersFriendship(userId, friendId);
+
+    return this.friendsRepository.save({
+      ...friendship,
+      deletedAt: new Date(),
+    });
+  }
 
   //TODO: mocks service
   async getNearbyFriends(userId, latitude, longitude) {
