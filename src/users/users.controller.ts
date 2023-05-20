@@ -15,18 +15,14 @@ import { SerializeInterceptors } from '../interceptors/serialize.interceptors';
 import { CreateUserDto } from './create-user.dto';
 import { UpdateUserDto } from './update-user.dto';
 import { UsersService } from './users.service';
-import { AuthService } from './auth.service';
 import { AuthorizationGuard } from 'src/authorization/authorization.guard';
 
-@Controller('auth')
+@Controller('users')
 export class UsersController {
-  constructor(
-    private userService: UsersService,
-    private authService: AuthService,
-  ) {}
+  constructor(private userService: UsersService) {}
 
   // @UseGuards(AuthorizationGuard)
-  @Post('/signup')
+  @Post('/')
   async createUser(@Body() body: CreateUserDto) {
     const user = await this.userService.create(body);
     return user;
@@ -45,8 +41,8 @@ export class UsersController {
 
   @UseInterceptors(SerializeInterceptors)
   @Get()
-  findAllUsers(@Query('email') email: string) {
-    return this.userService.find(email);
+  findAllUsers() {
+    return this.userService.find();
   }
 
   @Delete('/:id')

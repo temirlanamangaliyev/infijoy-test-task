@@ -28,12 +28,6 @@ export class User {
   @CreateDateColumn()
   createdAt: Date;
 
-  @Column()
-  email: string;
-
-  @Column()
-  password: string;
-
   @AfterInsert()
   logInsert() {
     console.log('Inserted User with id', this.id);
