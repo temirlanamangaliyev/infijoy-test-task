@@ -39,66 +39,50 @@ $ npm run test
 $ npm run test:cov
 ```
 
-$ API Documentation
+## API Documentation
 
 In order to check the documentation you need to run API, and go by http://localhost:3000/api, it will open Swagger on local
 
-$ Folder structure
+## Folder structure
 
-$ Database schema
+## Database schema
 
-+--------------+ +-------------+ +-----------------+
-| Users | | Friends | | Relationships |
-+--------------+ +-------------+ +-----------------+
-| id | | id | | id |
-| name | | user_id | | follower_id |
-| dob | | friend_id | | following_id |
-| address | | createdAt | | createdAt |
-| description | | deletedAt | | deletedAt |
-| createdAt | +-------------+ +-----------------+
-+--------------+
-|
-| 1:n
-|
-v
-+----------------+
-| Users |
-+----------------+
-| id |
-| name |
-| dob |
-| address |
-| description |
-| createdAt |
-+----------------+
-|
-| 1:n
-|
-v
-+-----------------+
-| Friends |
-+-----------------+
-| id |
-| user_id |
-| friend_id |
-| createdAt |
-| deletedAt |
-+-----------------+
-|
-| n:1
-|
-v
-+-----------------+
-| Relationships |
-+-----------------+
-| id |
-| follower_id |
-| following_id |
-| createdAt |
-| deletedAt |
-+-----------------+
+erDiagram
+Users ||--o{ Friends : has
+Users ||--o{ Relationships : has
+Friends }o--|| Relationships : belongs
+Users {
+id INTEGER
+name VARCHAR
+dob DATE
+address VARCHAR
+description VARCHAR
+createdAt DATE
+}
+Friends {
+id INTEGER
+user_id INTEGER
+friend_id INTEGER
+createdAt DATE
+deletedAt DATE
+}
+Relationships {
+id INTEGER
+follower_id INTEGER
+following_id INTEGER
+createdAt DATE
+deletedAt DATE
+}
 
-- `Users` and `Friends` have a one-to-many relationship, where a user can have multiple friends.
-- `Users` and `Relationships` also have a one-to-many relationship, where a user can have multiple relationships.
+The Users entity has the following attributes: id, name, dob, address, description, and createdAt.
 
-$ Env variables
+The Friends entity has the following attributes: id, user_id, friend_id, createdAt, and deletedAt.
+
+The Relationships entity has the following attributes: id, follower_id, following_id, createdAt, and deletedAt.
+
+The relationships are represented using arrows between the entities:
+
+Users has a one-to-many relationship with Friends and Relationships.
+Friends and Relationships have a many-to-one relationship.
+
+## Env variables
