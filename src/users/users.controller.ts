@@ -51,6 +51,7 @@ export class UsersController {
     return user;
   }
 
+  // @UseGuards(AuthGuard('jwt'))
   @UseInterceptors(SerializeInterceptors)
   @Get()
   findAllUsers() {
@@ -109,6 +110,7 @@ export class UsersController {
     return relation;
   }
 
+  // @UseGuards(AuthGuard('jwt'))
   @Post('/:id/relationships/following')
   @ApiOkResponse({ type: CreateRelationDto })
   async addUserToFollowing(
@@ -131,6 +133,7 @@ export class UsersController {
     return relation;
   }
 
+  // @UseGuards(AuthGuard('jwt'))
   @Get('/:id/friends')
   @ApiNotFoundResponse({ description: 'User not found' })
   async getUserFriends(@Param('id') id: number) {
@@ -139,6 +142,7 @@ export class UsersController {
     return userFriends;
   }
 
+  // @UseGuards(AuthGuard('jwt'))
   //TODO: make logic for finding nearby friends
   @Get('/:id/nearby-friends')
   async getNearbyFriends(@Param('id') id: number) {

@@ -18,7 +18,8 @@ import { LoggerMiddleware } from './middleware/logger.middleware';
       type: 'sqlite',
       database: 'db.sqlite',
       entities: [Users, Relationships, Friends],
-      synchronize: true,
+      synchronize: true, // Bad practice for production, but I guess for test task it is fine
+      logging: true, // Enable TypeORM logging
     }),
     UsersModule,
     AuthModule,
