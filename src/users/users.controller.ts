@@ -9,12 +9,14 @@ import {
   Query,
   NotFoundException,
   UseInterceptors,
+  UseGuards,
 } from '@nestjs/common';
 import { SerializeInterceptors } from '../interceptors/serialize.interceptors';
 import { CreateUserDto } from './create-user.dto';
 import { UpdateUserDto } from './update-user.dto';
 import { UsersService } from './users.service';
 import { AuthService } from './auth.service';
+import { AuthorizationGuard } from 'src/authorization/authorization.guard';
 
 @Controller('auth')
 export class UsersController {
@@ -22,9 +24,12 @@ export class UsersController {
     private userService: UsersService,
     private authService: AuthService,
   ) {}
+
+  // @UseGuards(AuthorizationGuard)
   @Post('/signup')
-  createUser(@Body() body: CreateUserDto) {
-    return this.authService.signup(body);
+  async createUser(@Body() body: CreateUserDto) {
+    const user = await this.userService.create(body);
+    return user;
   }
 
   @UseInterceptors(SerializeInterceptors) // using interceptor in order to show only fields that is required from doc

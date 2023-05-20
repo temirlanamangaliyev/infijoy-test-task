@@ -9,7 +9,7 @@ export class UsersService {
   create(body: any) {
     const newUser = this.repo.create(body);
 
-    this.repo.save(newUser);
+    return this.repo.save(newUser);
   }
 
   findOne(id: number) {
