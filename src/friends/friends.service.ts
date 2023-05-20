@@ -52,7 +52,9 @@ export class FriendsService {
   }
 
   //TODO: mocks service
-  async getNearbyFriends(userId, latitude, longitude) {
+  async getNearbyFriends(userId: number): Promise<Friends[]> {
+    this.logger.log(`Getting nearby friends for ${userId}`);
+
     const userFriends = await this.getUserFriends(userId);
 
     return userFriends.sort((user) => user.user_id);

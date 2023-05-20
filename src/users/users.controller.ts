@@ -31,7 +31,7 @@ export class UsersController {
   ) {}
 
   // @UseGuards(AuthGuard('jwt'))
-  @ApiOkResponse({ type: User, isArray: true })
+  @ApiOkResponse({ type: User })
   @Post('/')
   async createUser(@Body() body: CreateUserDto) {
     const user = await this.userService.create(body);
@@ -63,7 +63,7 @@ export class UsersController {
   }
 
   @Patch('/:id')
-  @ApiOkResponse({ type: User })
+  @ApiOkResponse({ type: UpdateUserDto })
   updateUser(@Param('id') id: string, @Body() body: UpdateUserDto) {
     return this.userService.update(parseInt(id), body);
   }
@@ -132,11 +132,18 @@ export class UsersController {
   }
 
   @Get('/:id/friends')
-  @ApiOkResponse({ type: Friends })
   @ApiNotFoundResponse({ description: 'User not found' })
   async getUserFriends(@Param('id') id: number) {
     const userFriends = await this.friendsService.getUserFriends(id);
 
     return userFriends;
+  }
+
+  //TODO: make logic for finding nearby friends
+  @Get('/:id/nearby-friends')
+  async getNearbyFriends(@Param('id') id: number) {
+    const nearbyFriends = await this.friendsService.getNearbyFriends(id);
+
+    return nearbyFriends;
   }
 }
