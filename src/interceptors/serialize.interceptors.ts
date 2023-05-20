@@ -8,7 +8,7 @@ import {
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { plainToClass } from 'class-transformer';
-import { UserDto } from 'src/users/user.dto';
+import { UserDto } from 'src/users/dtos/user.dto';
 
 export class SerializeInterceptors implements NestInterceptor {
   intercept(

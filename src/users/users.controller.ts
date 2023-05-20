@@ -12,8 +12,8 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { SerializeInterceptors } from '../interceptors/serialize.interceptors';
-import { CreateUserDto } from './create-user.dto';
-import { UpdateUserDto } from './update-user.dto';
+import { CreateUserDto } from './dtos/create-user.dto';
+import { UpdateUserDto } from './dtos/update-user.dto';
 import { UsersService } from './users.service';
 import { AuthorizationGuard } from 'src/authorization/authorization.guard';
 import { RelationshipsService } from 'src/relationships/relationships.service';
@@ -81,7 +81,7 @@ export class UsersController {
     @Param('id') id: number,
     @Body() body: CreateRelationDto,
   ) {
-    const relation = await this.relationshipsService.addUserRelation(
+    const relation = await this.relationshipsService.createUserRelation(
       id,
       body.followerId,
     );
@@ -105,7 +105,7 @@ export class UsersController {
     @Param('id') id: number,
     @Body() body: CreateRelationDto,
   ) {
-    const relation = await this.relationshipsService.addUserRelation(
+    const relation = await this.relationshipsService.createUserRelation(
       body.followerId,
       id,
     );

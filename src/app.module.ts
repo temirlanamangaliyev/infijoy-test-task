@@ -7,15 +7,16 @@ import { UsersModule } from './users/users.module';
 import { Users } from './users/user.entity';
 import { Relationships } from './relationships/relationships.entity';
 import { AuthorizationModule } from './authorization/authorization.module';
-import { RelationshipsService } from './relationships/relationships.service';
 import { RelationshipsModule } from './relationships/relationships.module';
+import { FriendsModule } from './friends/friends.module';
+import { Friends } from './friends/friends.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'db.sqlite',
-      entities: [Users, Relationships],
+      entities: [Users, Relationships, Friends],
       synchronize: true,
     }),
     UsersModule,
@@ -24,6 +25,7 @@ import { RelationshipsModule } from './relationships/relationships.module';
       isGlobal: true,
     }),
     RelationshipsModule,
+    FriendsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

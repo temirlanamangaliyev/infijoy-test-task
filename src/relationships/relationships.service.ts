@@ -6,12 +6,14 @@ import {
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Relationships } from './relationships.entity';
+import { FriendsService } from 'src/friends/friends.service';
 
 @Injectable()
 export class RelationshipsService {
   constructor(
     @InjectRepository(Relationships)
     private relationshipsRepository: Repository<Relationships>,
+    private friendsService: FriendsService,
   ) {}
 
   getAllUserRelationships() {
@@ -30,7 +32,7 @@ export class RelationshipsService {
     });
   }
 
-  async addUserRelation(followerId: number, followingId: number) {
+  async createUserRelation(followerId: number, followingId: number) {
     if (followerId == followingId) {
       throw new BadRequestException('User cannot follow himself!');
     }
@@ -47,7 +49,9 @@ export class RelationshipsService {
       following_id: followingId,
     });
 
-    return this.relationshipsRepository.save(newRelationship);
+    const relation = this.relationshipsRepository.save(newRelationship);
+
+    return relation;
   }
 
   async removeRelation(followerId: number, followingId: number) {
