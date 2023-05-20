@@ -28,16 +28,16 @@ export class Relationships {
 
   @AfterInsert()
   logInsert() {
-    console.log('Inserted User with id', this.id);
+    console.log('Inserted Relation with id', this.id);
   }
 
   @AfterRemove()
   logRemove() {
-    console.log('Removed User with id', this.id);
+    console.log('Removed Relation with id', this.id);
   }
 
   @AfterUpdate()
   logUpdate() {
-    console.log('Updated User with id', this.id);
+    console.log('Updated Relation with id', this.id);
   }
 }

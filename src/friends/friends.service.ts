@@ -14,20 +14,35 @@ export class FriendsService {
     private friendsRepository: Repository<Friends>,
   ) {}
 
-  addUsersToFriends(userId: number, friendId: number) {
-    const result = this.friendsRepository.create({
+  createFriendship(userId: number, friendId: number) {
+    const friendship = this.friendsRepository.create({
       user_id: userId,
       friend_id: friendId,
     });
 
-    return result;
+    return this.friendsRepository.save(friendship);
   }
 
   getUserFriends(userId: number) {
     const friends = this.friendsRepository.find({ where: { user_id: userId } });
+    console.log('friends', friends);
 
     return friends;
   }
+
+  getUsersFriendship(userId: number, friendId: number) {
+    const friendship = this.friendsRepository.findOne({
+      where: {
+        user_id: userId,
+        friend_id: friendId,
+        deletedAt: null, // Exclude already deleted relationships
+      },
+    });
+
+    return friendship;
+  }
+
+  deleteFriendship() {}
 
   //TODO: mocks service
   async getNearbyFriends(userId, latitude, longitude) {

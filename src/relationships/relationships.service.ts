@@ -50,8 +50,25 @@ export class RelationshipsService {
     });
 
     const relation = this.relationshipsRepository.save(newRelationship);
-
+    if (await this.hasUsersMutualSubscription(followerId, followingId)) {
+      try {
+        await Promise.all([
+          this.friendsService.createFriendship(followerId, followingId),
+          this.friendsService.createFriendship(followingId, followerId),
+        ]);
+      } catch (error) {}
+    }
     return relation;
+  }
+
+  async hasUsersMutualSubscription(followerId, followingId): Promise<boolean> {
+    const reverseRelationship = await this.getUserRelationship(
+      followingId,
+      followerId,
+    );
+    if (reverseRelationship) return true;
+
+    return false;
   }
 
   async removeRelation(followerId: number, followingId: number) {
@@ -65,9 +82,29 @@ export class RelationshipsService {
     }
 
     relationship.deletedAt = new Date();
+    if (await this.hasUsersFriendship(followerId, followingId)) {
+      // console.log('asdsssw');
+    }
     return this.relationshipsRepository.save(relationship);
   }
 
+  async hasUsersFriendship(
+    followerId: number,
+    followingId: number,
+  ): Promise<boolean> {
+    const followerFriendship = await this.friendsService.getUsersFriendship(
+      followerId,
+      followingId,
+    );
+    const followingFriendship = await this.friendsService.getUsersFriendship(
+      followingId,
+      followerId,
+    );
+
+    if (!followerFriendship && !followingFriendship) return false;
+
+    return true;
+  }
   async getUserRelationship(followerId: number, followingId: number) {
     const relationship = await this.relationshipsRepository.findOne({
       where: {

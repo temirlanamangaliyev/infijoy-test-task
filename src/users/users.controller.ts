@@ -18,12 +18,13 @@ import { UsersService } from './users.service';
 import { AuthorizationGuard } from 'src/authorization/authorization.guard';
 import { RelationshipsService } from 'src/relationships/relationships.service';
 import { CreateRelationDto } from 'src/relationships/create-relation.dto';
-
+import { FriendsService } from 'src/friends/friends.service';
 @Controller('users')
 export class UsersController {
   constructor(
     private userService: UsersService,
     private relationshipsService: RelationshipsService,
+    private friendsService: FriendsService,
   ) {}
 
   // @UseGuards(AuthorizationGuard)
@@ -119,5 +120,12 @@ export class UsersController {
   ) {
     const relation = await this.relationshipsService.removeRelation(userId, id);
     return relation;
+  }
+
+  @Get('/:id/friends')
+  async getUserFriends(@Param('id') id: number) {
+    const userFriends = await this.friendsService.getUserFriends(id);
+
+    return userFriends;
   }
 }
