@@ -6,7 +6,6 @@ import {
   Delete,
   Patch,
   Param,
-  Query,
   NotFoundException,
   UseInterceptors,
   UseGuards,
@@ -15,7 +14,7 @@ import { SerializeInterceptors } from '../interceptors/serialize.interceptors';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { UsersService } from './users.service';
-import { AuthorizationGuard } from 'src/authorization/authorization.guard';
+import { AuthGuard } from '@nestjs/passport';
 import { RelationshipsService } from 'src/relationships/relationships.service';
 import { CreateRelationDto } from 'src/relationships/create-relation.dto';
 import { FriendsService } from 'src/friends/friends.service';
@@ -27,7 +26,7 @@ export class UsersController {
     private friendsService: FriendsService,
   ) {}
 
-  // @UseGuards(AuthorizationGuard)
+  // @UseGuards(AuthGuard('jwt'))
   @Post('/')
   async createUser(@Body() body: CreateUserDto) {
     const user = await this.userService.create(body);

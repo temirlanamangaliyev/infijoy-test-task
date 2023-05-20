@@ -20,8 +20,6 @@ export class RelationshipsService {
   ) {}
 
   getAllUserRelationships(): Promise<Relationships[]> {
-    console.log('asd');
-
     return this.relationshipsRepository.find();
   }
 
@@ -60,7 +58,6 @@ export class RelationshipsService {
       follower_id: followerId,
       following_id: followingId,
     });
-    console.log('asd2');
 
     const relation = this.relationshipsRepository.save(newRelationship);
     if (await this.hasUsersMutualSubscription(followerId, followingId)) {
