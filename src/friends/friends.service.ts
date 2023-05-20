@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Friends } from './friends.entity';
@@ -25,7 +21,6 @@ export class FriendsService {
 
   getUserFriends(userId: number) {
     const friends = this.friendsRepository.find({ where: { user_id: userId } });
-    console.log('friends', friends);
 
     return friends;
   }
