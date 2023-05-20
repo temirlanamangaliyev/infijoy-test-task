@@ -1,3 +1,4 @@
+import { Users } from 'src/users/user.entity';
 import {
   Entity,
   Column,
@@ -7,6 +8,8 @@ import {
   AfterInsert,
   AfterRemove,
   AfterUpdate,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 
 @Entity()
@@ -25,6 +28,14 @@ export class Friends {
 
   @DeleteDateColumn()
   deletedAt: Date;
+
+  @ManyToOne(() => Users, (user) => user.friends)
+  @JoinColumn({ name: 'user_id' })
+  user: Users;
+
+  @ManyToOne(() => Users, (user) => user.friendOf)
+  @JoinColumn({ name: 'friend_id' })
+  friend: Users;
 
   @AfterInsert()
   logInsert() {

@@ -1,3 +1,5 @@
+import { Friends } from 'src/friends/friends.entity';
+import { Relationships } from 'src/relationships/relationships.entity';
 import {
   Entity,
   Column,
@@ -6,6 +8,7 @@ import {
   AfterInsert,
   AfterRemove,
   AfterUpdate,
+  OneToMany,
 } from 'typeorm';
 
 @Entity()
@@ -27,6 +30,18 @@ export class Users {
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @OneToMany(() => Relationships, (relationship) => relationship.follower)
+  followers: Relationships[];
+
+  @OneToMany(() => Relationships, (relationship) => relationship.following)
+  following: Relationships[];
+
+  @OneToMany(() => Friends, (friend) => friend.user)
+  friends: Friends[];
+
+  @OneToMany(() => Friends, (friend) => friend.friend)
+  friendOf: Friends[];
 
   @AfterInsert()
   logInsert() {
