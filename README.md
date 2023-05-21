@@ -51,6 +51,8 @@ To access the API documentation, run the API and visit http://localhost:3000/api
 
 ## Database schema
 
+As database it is decided to use SQLite, due to its simplicity, in order to check data in db you can use vscode extension
+
 ```mermaid
 erDiagram
 Users ||--o{ Friends : has
@@ -100,3 +102,7 @@ AUTH0_AUDIENCE
 AUTH0_DOMAIN
 
 Make sure to set these variables before running the application. For more comfortable testing guards is commented, if u want to check it set your own keys and API token
+
+## Logging
+
+For logging it is decided to use embedded Logger of NestJS and TypeORM, I didnt dived API to develop or production

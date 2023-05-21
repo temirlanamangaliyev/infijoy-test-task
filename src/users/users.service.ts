@@ -2,13 +2,15 @@ import { Injectable, NotFoundException, Logger } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from './user.entity';
+import { CreateUserDto as User } from './dtos/create-user.dto';
+
 @Injectable()
 export class UsersService {
   private readonly logger = new Logger(UsersService.name);
 
   constructor(@InjectRepository(Users) private repo: Repository<Users>) {}
 
-  create(body): Promise<Users[]> {
+  create(body: User): Promise<Users> {
     this.logger.log(`Creating user`);
     const user = this.repo.create(body);
 
