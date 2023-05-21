@@ -6,37 +6,31 @@ Test task INFIJOY
 
 API for creating users connect them with creating relations and making friends
 
-## Installation
+## Installation and API runing
 
-````bash
+```bash
 # Step 1: Clone the repository
 git clone https://github.com/temirlanamangaliyev/infijoy-test-task
 
 # Step 2: Install dependencies
-cd infijoy-test-task
-npm install
+$ cd infijoy-test-task
+$ npm install
 
-## Running the app
-
-```bash
-# development
-$ npm run start
+# Step 3: Run app
 
 # watch mode
 $ npm run start:dev
 
-# production mode
-$ npm run start:prod
-````
+```
 
 ## Testing
+
+API services covered with unit test, in order to run test simple run:
 
 ```bash
 # unit tests
 $ npm run test
 
-# test coverage
-$ npm run test:cov
 ```
 
 ## API Documentation
@@ -46,8 +40,14 @@ To access the API documentation, run the API and visit http://localhost:3000/api
 ## Folder structure
 
     src: Contains the source code of the application.
-
+        authorization: files for authorization service
+        friends: files for friends service, including entity, dto and tests
+        interceptors: simple interceptors for intercepting user response data
+        relationships: files for relationships service, including entity, dto and tests
+        users: files for users service, including entity, dto and tests
+        middleware: holds logging middleware
     test: Contains the unit tests for the application.
+    .env: environment variables
 
 ## Database schema
 
@@ -98,7 +98,7 @@ Friends and Relationships have a many-to-one relationship.
 Environment Variables
 The application requires the following environment variables to be set in .file, auth is implemented with guards:
 
-AUTH0_AUDIENCE
+AUTH0_AUDIENCE,
 AUTH0_DOMAIN
 
 Make sure to set these variables before running the application. For more comfortable testing guards is commented, if u want to check it set your own keys and API token
