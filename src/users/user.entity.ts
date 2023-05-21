@@ -1,5 +1,5 @@
-import { Friends } from 'src/friends/friends.entity';
-import { Relationships } from 'src/relationships/relationships.entity';
+import { Friends } from '../friends/friends.entity';
+import { Relationships } from '../relationships/relationships.entity';
 import {
   Entity,
   Column,

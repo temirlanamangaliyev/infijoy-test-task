@@ -41,6 +41,7 @@ export class UsersController {
   })
   @ApiOkResponse({ type: User })
   // @UseGuards(AuthGuard('jwt'))
+  // @ApiBearerAuth()
   @Post('/')
   async createUser(@Body() body: CreateUserDto) {
     const user = await this.userService.create(body);
@@ -70,6 +71,7 @@ export class UsersController {
     description: 'Returns a list of all users.',
   })
   // @UseGuards(AuthGuard('jwt'))
+  // @ApiBearerAuth()
   @UseInterceptors(SerializeInterceptors)
   @Get()
   findAllUsers() {
@@ -172,6 +174,7 @@ export class UsersController {
   @ApiParam({ name: 'id', description: 'User ID', type: 'number' })
   @ApiOkResponse({ type: CreateRelationDto })
   // @UseGuards(AuthGuard('jwt'))
+  // @ApiBearerAuth()
   @Post('/:id/relationships/following')
   async addUserToFollowing(
     @Param('id') id: number,

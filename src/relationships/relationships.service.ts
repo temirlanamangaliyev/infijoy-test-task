@@ -60,6 +60,7 @@ export class RelationshipsService {
     });
 
     const relation = this.relationshipsRepository.save(newRelationship);
+
     if (await this.hasUsersMutualSubscription(followerId, followingId)) {
       this.logger.log(`Create friendship for ${followerId}, ${followingId} `);
       try {
