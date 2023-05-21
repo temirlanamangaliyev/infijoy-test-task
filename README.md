@@ -1,73 +1,108 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Test task INFIJOY
 
-## Installation
+## Overview
+
+API for creating users connect them with creating relations and making friends
+
+## Installation and API runing
 
 ```bash
+# Step 1: Clone the repository
+git clone https://github.com/temirlanamangaliyev/infijoy-test-task
+
+# Step 2: Install dependencies
+$ cd infijoy-test-task
 $ npm install
-```
 
-## Running the app
-
-```bash
-# development
-$ npm run start
+# Step 3: Run app
 
 # watch mode
 $ npm run start:dev
 
-# production mode
-$ npm run start:prod
 ```
 
-## Test
+## Testing
+
+API services covered with unit test, in order to run test simple run:
 
 ```bash
 # unit tests
 $ npm run test
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
 ```
 
-## Support
+## API Documentation
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+To access the API documentation, run the API and visit http://localhost:3000/api. This will open Swagger on your local machine.
 
-## Stay in touch
+## Folder structure
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+    src: Contains the source code of the application.
+        authorization: files for authorization service
+        friends: files for friends service, including entity, dto and tests
+        interceptors: simple interceptors for intercepting user response data
+        relationships: files for relationships service, including entity, dto and tests
+        users: files for users service, including entity, dto and tests
+        middleware: holds logging middleware
+    test: Contains the unit tests for the application.
+    .env: environment variables
 
-## License
+## Database schema
 
-Nest is [MIT licensed](LICENSE).
+As database it is decided to use SQLite, due to its simplicity, in order to check data in db you can use vscode extension
+
+```mermaid
+erDiagram
+Users ||--o{ Friends : has
+Users ||--o{ Relationships : has
+Friends }o--|| Relationships : belongs
+Users {
+id INTEGER
+name VARCHAR
+dob DATE
+address VARCHAR
+description VARCHAR
+createdAt DATE
+}
+Friends {
+id INTEGER
+user_id INTEGER
+friend_id INTEGER
+createdAt DATE
+deletedAt DATE
+}
+Relationships {
+id INTEGER
+follower_id INTEGER
+following_id INTEGER
+createdAt DATE
+deletedAt DATE
+}
+```
+
+The Users entity has the following attributes: id, name, dob, address, description, and createdAt.
+
+The Friends entity has the following attributes: id, user_id, friend_id, createdAt, and deletedAt.
+
+The Relationships entity has the following attributes: id, follower_id, following_id, createdAt, and deletedAt.
+
+The relationships are represented using arrows between the entities:
+
+Users has a one-to-many relationship with Friends and Relationships.
+Friends and Relationships have a many-to-one relationship.
+
+## Env variables
+
+Environment Variables
+The application requires the following environment variables to be set in .file, auth is implemented with guards:
+
+AUTH0_AUDIENCE,
+AUTH0_DOMAIN
+
+Make sure to set these variables before running the application. For more comfortable testing guards is commented, if u want to check it set your own keys and API token
+
+## Logging
+
+For logging it is decided to use embedded Logger of NestJS and TypeORM, I didnt dived API to develop or production
