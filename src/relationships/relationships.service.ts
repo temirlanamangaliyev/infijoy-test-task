@@ -7,7 +7,7 @@ import {
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Relationships } from './relationships.entity';
-import { FriendsService } from 'src/friends/friends.service';
+import { FriendsService } from '../friends/friends.service';
 
 @Injectable()
 export class RelationshipsService {
@@ -131,14 +131,10 @@ export class RelationshipsService {
       followerId,
       followingId,
     );
-    const followingFriendship = await this.friendsService.getUsersFriendship(
-      followingId,
-      followerId,
-    );
 
-    if (!followerFriendship || !followingFriendship) return false;
+    if (!!followerFriendship) return true;
 
-    return true;
+    return false;
   }
   async getUserRelationship(
     followerId: number,
