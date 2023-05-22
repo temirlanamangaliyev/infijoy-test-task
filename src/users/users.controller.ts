@@ -193,7 +193,7 @@ export class UsersController {
   })
   @ApiParam({ name: 'id', description: 'User ID', type: 'number' })
   @ApiParam({ name: 'userId', description: 'User ID', type: 'number' })
-  @Delete('/:id/relationships/followers/:userId')
+  @Delete('/:id/relationships/following/:userId')
   async removeUserFromFollowers(
     @Param('id') id: number,
     @Param('userId') userId: number,
