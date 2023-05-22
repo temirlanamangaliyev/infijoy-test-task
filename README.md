@@ -4,7 +4,7 @@ Test task INFIJOY
 
 ## Overview
 
-API for creating users connect them with creating relations and making friends
+API for creating users connect them with creating relations and making friends.
 
 ## Installation and API runing
 
@@ -92,6 +92,8 @@ The relationships are represented using arrows between the entities:
 
 Users has a one-to-many relationship with Friends and Relationships.
 Friends and Relationships have a many-to-one relationship.
+
+If two users follow each other, they become friends, but if one stops following API destroys friendship. Story of realations is saved as friendship between users.
 
 ## Env variables
 
